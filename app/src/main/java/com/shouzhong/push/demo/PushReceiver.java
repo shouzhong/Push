@@ -1,6 +1,7 @@
 package com.shouzhong.push.demo;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.shouzhong.push.BasePushReceiver;
 
@@ -18,6 +19,6 @@ public class PushReceiver extends BasePushReceiver {
      */
     @Override
     public void onReceive(Context context, int type, String action, String data) {
-
+        Log.e("============", action + ";" + data);
     }
 }

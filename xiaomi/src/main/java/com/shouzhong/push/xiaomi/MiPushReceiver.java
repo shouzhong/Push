@@ -15,12 +15,12 @@ import java.util.Map;
 public class MiPushReceiver extends PushMessageReceiver {
     @Override
     public void onReceivePassThroughMessage(Context context, MiPushMessage miPushMessage) {
-        MiPushUtils.sendData("ACTION_PASS_THROUGH_MESSAGE", toJson(miPushMessage));
+        MiPushUtils.sendData("action.PASS_THROUGH_MESSAGE", toJson(miPushMessage));
     }
 
     @Override
     public void onNotificationMessageArrived(Context context, MiPushMessage miPushMessage) {
-        MiPushUtils.sendData("ACTION_NOTIFICATION_MESSAGE", toJson(miPushMessage));
+        MiPushUtils.sendData("action.NOTIFICATION_MESSAGE", toJson(miPushMessage));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class MiPushReceiver extends PushMessageReceiver {
     public void onCommandResult(Context context, MiPushCommandMessage miPushCommandMessage) {
         if (TextUtils.equals(miPushCommandMessage.getCommand(), MiPushClient.COMMAND_REGISTER)) {
             String token = MiPushClient.getRegId(context);
-            MiPushUtils.sendData("ACTION_TOKEN", token);
+            MiPushUtils.sendData("action.TOKEN", token);
         }
     }
 
@@ -40,18 +40,19 @@ public class MiPushReceiver extends PushMessageReceiver {
         if (msg == null || msg.getExtra() == null || msg.getExtra().size() == 0) return null;
         try {
             Map<String, String> map = msg.getExtra();
-            JSONObject jo = new JSONObject();
-            jo.put("title", msg.getTitle());
-            jo.put("content", msg.getContent());
-            jo.put("description", msg.getDescription());
+            StringBuffer sb = new StringBuffer("{");
+            sb.append("\"title\":\"").append(msg.getTitle()).append("\",");
+            sb.append("\"content\":\"").append(msg.getContent()).append("\",");
+            sb.append("\"description\":\"").append(msg.getDescription()).append("\"");
             if (msg.getExtra() != null && msg.getExtra().size() > 0) {
-                JSONObject temp = new JSONObject();
+                sb.append(",\"extra\":{");
                 for (String s : map.keySet()) {
-                    temp.put(s, map.get(s));
+                    sb.append("\"").append(s).append("\":\"").append(map.get(s)).append("\",");
                 }
-                jo.put("extra", temp.toString());
+                sb.setCharAt(sb.length() - 1, '}');
             }
-            return jo.toString();
+            sb.append("}");
+            return sb.toString();
         } catch (Exception e) {}
         return null;
     }

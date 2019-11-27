@@ -9,7 +9,7 @@ public class HuaweiPushReceiver extends PushReceiver {
 
     @Override
     public void onToken(Context context, String token) {
-        HuaweiPushUtils.sendData("ACTION_TOKEN", token);
+        HuaweiPushUtils.sendData("action.TOKEN", token);
     }
 
     /**
@@ -26,7 +26,7 @@ public class HuaweiPushReceiver extends PushReceiver {
     @Override
     public void onPushMsg(Context context, byte[] msg, String token) {
         try {
-            HuaweiPushUtils.sendData("ACTION_PASS_THROUGH_MESSAGE", new String(msg, "UTF-8"));
+            HuaweiPushUtils.sendData("action.PASS_THROUGH_MESSAGE", new String(msg, "UTF-8"));
         } catch (Exception e) {}
     }
 }

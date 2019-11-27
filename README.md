@@ -3,6 +3,10 @@
 小米推送和华为推送整合
 ## 使用
 ### 依赖
+华为推送maven
+```
+maven {url 'http://developer.huawei.com/repo/'}
+```
 ```
 // 基础包
 implementation 'com.shouzhong:Push:1.0.1'
@@ -10,9 +14,9 @@ implementation 'com.shouzhong:Push:1.0.1'
 以下选择自己需要的
 ```
 // 小米推送资源包
-implementation 'com.shouzhong:PushXiaomiLib:1.0.1'
+implementation 'com.shouzhong:PushXiaomiLib:1.0.4'
 // 华为推送资源包
-implementation 'com.shouzhong:PushHuaweiLib:1.0.0'
+implementation 'com.shouzhong:PushHuaweiLib:1.0.1'
 ```
 ### 代码
 在Application的onCreate中
@@ -68,7 +72,7 @@ public class PushReceiver extends BasePushReceiver {
 <receiver android:name="com.shouzhong.push.demo.PushReceiver"
     android:permission="${applicationId}.permission.PUSH_RECEIVE">
     <intent-filter >
-        <action android:name="${applicationId}.permission.PUSH_RECEIVE"/>
+        <action android:name="${applicationId}.RECEIVE_PUSH_MESSAGE"/>
     </intent-filter>
 </receiver>
 ```

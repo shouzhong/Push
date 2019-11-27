@@ -31,7 +31,7 @@
         <receiver android:name="com.shouzhong.push.demo.PushReceiver"
             android:permission="${applicationId}.permission.PUSH_RECEIVE">
             <intent-filter >
-                <action android:name="${applicationId}.permission.PUSH_RECEIVE"/>
+                <action android:name="${applicationId}.RECEIVE_PUSH_MESSAGE"/>
             </intent-filter>
         </receiver>
     </application>

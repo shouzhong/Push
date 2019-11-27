@@ -1,0 +1,2 @@
+include ':app', ':xiaomi', ':huawei', ':lib'
+rootProject.name='Push'

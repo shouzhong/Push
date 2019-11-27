@@ -1,11 +1,13 @@
 package com.shouzhong.push;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 
 import com.shouzhong.push.huawei.HuaweiPushUtils;
 import com.shouzhong.push.xiaomi.MiPushUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class PushUtils {
     public static final String ACTION_TOKEN = "action.TOKEN";
 
     private static int type;
+    private static Application app;
 
     /**
      * 初始化，在application的onCreate
@@ -36,16 +39,17 @@ public class PushUtils {
      */
     public static void init(Application app, int type) {
         PushUtils.type = type;
+        PushUtils.app = app;
         if ((type & TYPE_MIX) == TYPE_MIX) {
-            if (canHuaweiPush()) HuaweiPushUtils.init(app);
-            else MiPushUtils.init(app);
+            if (canHuaweiPush()) HuaweiPushUtils.init(getApplication());
+            else MiPushUtils.init(getApplication());
             return;
         }
         if ((type & TYPE_XIAOMI) == TYPE_XIAOMI) {
-            MiPushUtils.init(app);
+            MiPushUtils.init(getApplication());
         }
         if ((type & TYPE_HUAWEI) == TYPE_HUAWEI) {
-            HuaweiPushUtils.init(app);
+            HuaweiPushUtils.init(getApplication());
         }
     }
 
@@ -61,6 +65,24 @@ public class PushUtils {
         }
         if ((type & TYPE_XIAOMI) == TYPE_XIAOMI) {
 
+        }
+        if ((type & TYPE_HUAWEI) == TYPE_HUAWEI) {
+            HuaweiPushUtils.getToken(activity);
+        }
+    }
+
+    /**
+     * 重新连接
+     *
+     * @param activity
+     */
+    public static void reconnect(Activity activity) {
+        if ((type & TYPE_MIX) == TYPE_MIX) {
+            if (canHuaweiPush()) HuaweiPushUtils.getToken(activity);
+            return;
+        }
+        if ((type & TYPE_XIAOMI) == TYPE_XIAOMI) {
+            MiPushUtils.init(getApplication());
         }
         if ((type & TYPE_HUAWEI) == TYPE_HUAWEI) {
             HuaweiPushUtils.getToken(activity);
@@ -279,5 +301,28 @@ public class PushUtils {
             return false;
         }
         return emuiApiLevel > 5.0;
+    }
+
+    private static Application getApplication() {
+        if (app != null) return app;
+        try {
+            @SuppressLint("PrivateApi")
+            Class<?> activityThread = Class.forName("android.app.ActivityThread");
+            Object thread = activityThread.getMethod("currentActivityThread").invoke(null);
+            Object app = activityThread.getMethod("getApplication").invoke(thread);
+            if (app == null) {
+                throw new NullPointerException("u should init first");
+            }
+            return PushUtils.app = (Application) app;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        throw new NullPointerException("u should init first");
     }
 }

@@ -5,12 +5,12 @@
 ### 依赖
 ```
 // 基础包
-implementation 'com.shouzhong:Push:1.0.0'
+implementation 'com.shouzhong:Push:1.0.1'
 ```
 以下选择自己需要的
 ```
 // 小米推送资源包
-implementation 'com.shouzhong:PushXiaomiLib:1.0.0'
+implementation 'com.shouzhong:PushXiaomiLib:1.0.1'
 // 华为推送资源包
 implementation 'com.shouzhong:PushHuaweiLib:1.0.0'
 ```
@@ -78,6 +78,7 @@ PushUtils，以下只支持小米推送
 
 方法名 | 说明
 ------------ | -------------
+reconnect | 重新连接
 getAllAlias | 获取所有别名
 isAlias | 是不是别名
 setAlias | 设置别名

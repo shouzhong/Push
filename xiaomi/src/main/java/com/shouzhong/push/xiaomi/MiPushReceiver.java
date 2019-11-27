@@ -41,8 +41,15 @@ public class MiPushReceiver extends PushMessageReceiver {
         try {
             Map<String, String> map = msg.getExtra();
             JSONObject jo = new JSONObject();
-            for (String s : map.keySet()) {
-                jo.put(s, map.get(s));
+            jo.put("title", msg.getTitle());
+            jo.put("content", msg.getContent());
+            jo.put("description", msg.getDescription());
+            if (msg.getExtra() != null && msg.getExtra().size() > 0) {
+                JSONObject temp = new JSONObject();
+                for (String s : map.keySet()) {
+                    temp.put(s, map.get(s));
+                }
+                jo.put("extra", temp.toString());
             }
             return jo.toString();
         } catch (Exception e) {}

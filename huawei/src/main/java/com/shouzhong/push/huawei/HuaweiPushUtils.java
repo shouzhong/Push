@@ -1,41 +1,51 @@
 package com.shouzhong.push.huawei;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
+import android.text.TextUtils;
 
-import com.huawei.android.hms.agent.HMSAgent;
-import com.huawei.android.hms.agent.common.handler.ConnectHandler;
-import com.huawei.android.hms.agent.push.handler.GetTokenHandler;
+import com.huawei.hms.aaid.HmsInstanceId;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HuaweiPushUtils {
 
     private static Application app;
+    private static ExecutorService executor;
 
-    public static void init(Application app) {
-        HuaweiPushUtils.app = app;
-        HMSAgent.init(app);
+    public static void init() {
+        if (executor == null) executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                String token = getToken();
+                if (TextUtils.isEmpty(token)) return;
+                HuaweiPushUtils.sendData("action.TOKEN", token);
+            }
+        });
     }
 
-    public static void getToken(Activity activity) {
-        HMSAgent.connect(activity, new ConnectHandler() {
-            @Override
-            public void onConnect(int rst) {
-            }
-        });
-        HMSAgent.Push.getToken(new GetTokenHandler() {
-            @Override
-            public void onResult(int rst) {
-            }
-        });
+    /**
+     * 注意以下方法在子线程运行
+     *
+     * @return
+     */
+    public static String getToken() {
+        try {
+            ApplicationInfo appInfo = getApplication().getPackageManager().getApplicationInfo(getApplication().getPackageName(), PackageManager.GET_META_DATA);
+            String appId = appInfo.metaData.getString("com.huawei.hms.client.appid");
+            return HmsInstanceId.getInstance(getApplication()).getToken(appId.replace("appid=", ""), "HCM");
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     static void sendData(String action, String data) {
@@ -71,13 +81,7 @@ public class HuaweiPushUtils {
                 throw new NullPointerException("u should init first");
             }
             return HuaweiPushUtils.app = (Application) app;
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         throw new NullPointerException("u should init first");

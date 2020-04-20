@@ -22,8 +22,7 @@ public class MiPushUtils {
 
     private static Application app;
 
-    public static void init(Application app) {
-        MiPushUtils.app = app;
+    public static void init() {
         try {
             if (isMainProcess()) {
                 ApplicationInfo appInfo = getApplication().getPackageManager().getApplicationInfo(getApplication().getPackageName(), PackageManager.GET_META_DATA);

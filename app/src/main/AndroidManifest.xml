@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".MyApp"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -19,14 +20,14 @@
 
         <meta-data
             android:name="MIPUSH_APP_ID"
-            android:value="\你的小米推送appId"/>
+            android:value="\2882303761517619408"/>
         <meta-data
             android:name="MIPUSH_APP_KEY"
-            android:value="\你的小米推送appKey"/>
+            android:value="\5541761911408"/>
 
         <meta-data
             android:name="com.huawei.hms.client.appid"
-            android:value="appid=你的华为推送appId"/>
+            android:value="appid=101055941"/>
 
         <receiver android:name="com.shouzhong.push.demo.PushReceiver"
             android:permission="${applicationId}.permission.PUSH_RECEIVE">

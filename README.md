@@ -27,11 +27,7 @@ implementation 'com.shouzhong:PushHuaweiLib:1.0.1'
  * PushUtils.TYPE_HUAWEI只用华为推送
  * PushUtils.TYPE_MIX混合模式（华为手机上用华为推送，其他用小米推送）
  */
-PushUtils.init(applicaiton, type);
-```
-在第一个activity的onCreate中（有使用到华为推送时，没用到忽略）
-```
-PushUtils.init(activity);
+PushUtils.init(type);
 ```
 自定义广播继承BasePushReceiver
 ```
@@ -95,9 +91,11 @@ unsetUserAccount | 取消账户
 clearUserAccount | 清空账户
 
 ## 混淆
+### 代码混淆
 ```
 -keep class com.shouzhong.** {*;}
 -dontwarn com.shouzhong.**
+// 华为
 -keepattributes *Annotation*
 -keepattributes Exceptions
 -keepattributes InnerClasses
@@ -106,13 +104,27 @@ clearUserAccount | 清空账户
 -keep class com.hianalytics.android.**{*;}
 -keep class com.huawei.updatesdk.**{*;}
 -keep class com.huawei.hms.**{*;}
--keep class com.huawei.android.hms.agent.**{*;}
--dontwarn com.huawei.*
--dontwarn com.hianalytics.android.*
+// 小米
 -keep class com.xiaomi.** {*;}
 -dontwarn com.xiaomi.push.**
 -keep class com.google.protobuf.micro.**{*;}
 -dontwarn com.google.protobuf.micro.**
 -keep class org.apache.thrift.**{*;}
 -dontwarn org.apache.thrift.**
+```
+### 如果使用AndResGuard，请把以下加入白名单
+```
+"R.string.agc*",
+"R.string.hms*",
+"R.string.connect_server_fail_prompt_toast",
+"R.string.getting_message_fail_prompt_toast",
+"R.string.no_available_network_prompt_toast",
+"R.string.third_app_*",
+"R.string.upsdk_*",
+"R.layout.hms*",
+"R.layout.upsdk_*",
+"R.drawable.upsdk*",
+"R.color.upsdk*",
+"R.dimen.upsdk*",
+"R.style.upsdk*"
 ```

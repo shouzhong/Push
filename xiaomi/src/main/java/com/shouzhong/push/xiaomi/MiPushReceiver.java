@@ -8,8 +8,6 @@ import com.xiaomi.mipush.sdk.MiPushCommandMessage;
 import com.xiaomi.mipush.sdk.MiPushMessage;
 import com.xiaomi.mipush.sdk.PushMessageReceiver;
 
-import org.json.JSONObject;
-
 import java.util.Map;
 
 public class MiPushReceiver extends PushMessageReceiver {
@@ -43,7 +41,9 @@ public class MiPushReceiver extends PushMessageReceiver {
             StringBuffer sb = new StringBuffer("{");
             sb.append("\"title\":\"").append(msg.getTitle()).append("\",");
             sb.append("\"content\":\"").append(msg.getContent()).append("\",");
-            sb.append("\"description\":\"").append(msg.getDescription()).append("\"");
+            sb.append("\"description\":\"").append(msg.getDescription()).append("\",");
+            sb.append("\"message_id\":\"").append(msg.getMessageId()).append("\",");
+            sb.append("\"notify_id\":").append(msg.getNotifyId());
             if (msg.getExtra() != null && msg.getExtra().size() > 0) {
                 sb.append(",\"extra\":{");
                 for (String s : map.keySet()) {

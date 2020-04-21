@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.huawei.hms.push.HmsMessageService;
 import com.huawei.hms.push.RemoteMessage;
 
+import static com.shouzhong.push.PushConstants.*;
+import static com.shouzhong.push.PushUtils.*;
 
 public class HuaweiPushService extends HmsMessageService {
     /**
@@ -14,7 +16,7 @@ public class HuaweiPushService extends HmsMessageService {
      */
     @Override
     public void onNewToken(String token) {
-        HuaweiPushUtils.sendData("action.TOKEN", token);
+        sendData(TYPE_HUAWEI, ACTION_TOKEN, token);
     }
 
     @Override
@@ -31,30 +33,7 @@ public class HuaweiPushService extends HmsMessageService {
                 sb.append(",\"extra\":").append(data);
             }
             sb.append("}");
-            HuaweiPushUtils.sendData("action.PASS_THROUGH_MESSAGE", sb.toString());
+            sendData(TYPE_HUAWEI, ACTION_PASS_THROUGH_MESSAGE, sb.toString());
         } catch (Exception e) {}
     }
-
-//    @Override
-//    public void onToken(Context context, String token) {
-//        HuaweiPushUtils.sendData("action.TOKEN", token);
-//    }
-//
-//    /**
-//     * 该方法不可用
-//     *
-//     * @param context
-//     * @param event
-//     * @param extras
-//     */
-//    @Override
-//    public void onEvent(Context context, Event event, Bundle extras) {
-//    }
-//
-//    @Override
-//    public void onPushMsg(Context context, byte[] msg, String token) {
-//        try {
-//            HuaweiPushUtils.sendData("action.PASS_THROUGH_MESSAGE", new String(msg, "UTF-8"));
-//        } catch (Exception e) {}
-//    }
 }

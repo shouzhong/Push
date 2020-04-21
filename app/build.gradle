@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.taole.wuliu"
+        applicationId "com.shouzhong.push.demo"
         minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
@@ -13,25 +13,20 @@ android {
 
     //签名配置
     signingConfigs {
-        debugConfig {
-            keyAlias "key_debug"
-            keyPassword "key_debug"
-            storeFile file("/key_debug.jks")
-            storePassword "key_debug"
-        }
-        releaseConfig {
-            keyAlias "key_release"
-            keyPassword "key_release"
-            storeFile file("/key_release.jks")
-            storePassword "key_release"
+        config {
+            keyAlias "key"
+            keyPassword "123456"
+            storeFile file("key.jks")
+            storePassword "123456"
         }
     }
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.releaseConfig
+            signingConfig signingConfigs.config
         }
         release {
+            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -39,9 +34,9 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation project(":lib")
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.blankj:utilcodex:1.28.0'
-    implementation project(":lib")
-    implementation project(":xiaomi")
-    implementation project(":huawei")
+    implementation "com.huawei.hms:push:4.0.2.300"
 }

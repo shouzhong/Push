@@ -5,8 +5,10 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import com.blankj.utilcode.util.LogUtils;
+import com.shouzhong.push.huawei.HuaweiPushUtils;
 
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,5 +16,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View v) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    LogUtils.e(HuaweiPushUtils.getToken(MainActivity.this));
+                } catch (Exception e) {
+                    LogUtils.e(e.getClass().getName() + "->" + e.getMessage());
+                }
+            }
+        }).start();
     }
 }

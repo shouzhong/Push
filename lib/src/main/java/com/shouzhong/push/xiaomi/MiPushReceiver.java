@@ -10,27 +10,30 @@ import com.xiaomi.mipush.sdk.PushMessageReceiver;
 
 import java.util.Map;
 
+import static com.shouzhong.push.PushConstants.*;
+import static com.shouzhong.push.PushUtils.*;
+
 public class MiPushReceiver extends PushMessageReceiver {
     @Override
     public void onReceivePassThroughMessage(Context context, MiPushMessage miPushMessage) {
-        MiPushUtils.sendData("action.PASS_THROUGH_MESSAGE", toJson(miPushMessage));
+        sendData(TYPE_XIAOMI, ACTION_PASS_THROUGH_MESSAGE, toJson(miPushMessage));
     }
 
     @Override
     public void onNotificationMessageArrived(Context context, MiPushMessage miPushMessage) {
-        MiPushUtils.sendData("action.NOTIFICATION_MESSAGE", toJson(miPushMessage));
+        sendData(TYPE_XIAOMI, ACTION_NOTIFICATION_MESSAGE, toJson(miPushMessage));
     }
 
     @Override
     public void onNotificationMessageClicked(Context context, MiPushMessage miPushMessage) {
-        MiPushUtils.sendData("action.NOTIFICATION_MESSAGE_CLICKED", toJson(miPushMessage));
+        sendData(TYPE_XIAOMI, ACTION_NOTIFICATION_MESSAGE_CLICKED, toJson(miPushMessage));
     }
 
     @Override
     public void onCommandResult(Context context, MiPushCommandMessage miPushCommandMessage) {
         if (TextUtils.equals(miPushCommandMessage.getCommand(), MiPushClient.COMMAND_REGISTER)) {
             String token = MiPushClient.getRegId(context);
-            MiPushUtils.sendData("action.TOKEN", token);
+            sendData(TYPE_XIAOMI, ACTION_TOKEN, token);
         }
     }
 

@@ -13,9 +13,9 @@ android {
 }
 
 dependencies {
-    compileOnly project(":xiaomi")
-    compileOnly project(":huawei")
+    compileOnly fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     compileOnly 'com.blankj:utilcodex:1.28.0'
+    compileOnly "com.huawei.hms:push:4.0.2.300"
 }
 
 //发布 Jcenter

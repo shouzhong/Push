@@ -19,15 +19,8 @@
         </activity>
 
         <meta-data
-            android:name="MIPUSH_APP_ID"
-            android:value="\2882303761517619408"/>
-        <meta-data
-            android:name="MIPUSH_APP_KEY"
-            android:value="\5541761911408"/>
-
-        <meta-data
             android:name="com.huawei.hms.client.appid"
-            android:value="appid=101055941"/>
+            android:value="appid=102071911"/>
 
         <receiver android:name="com.shouzhong.push.demo.PushReceiver"
             android:permission="${applicationId}.permission.PUSH_RECEIVE">

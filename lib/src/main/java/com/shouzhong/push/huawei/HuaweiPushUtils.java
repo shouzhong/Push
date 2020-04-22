@@ -19,6 +19,9 @@ public class HuaweiPushUtils {
 
     /**
      * 华为推送初始化
+     * <meta-data
+     *  android:name="HUAWEI_PUSH_APP_ID"
+     *  aandroid:value="value=xxxxxxxx"/>
      *
      * @param context 如果context为activity，则用户如果未安装hms或者hms版本过低时会弹框提示用户去下载
      */
@@ -45,7 +48,7 @@ public class HuaweiPushUtils {
      */
     public static String getToken(Context context) throws Exception {
         ApplicationInfo appInfo = getApplication().getPackageManager().getApplicationInfo(getApplication().getPackageName(), PackageManager.GET_META_DATA);
-        String appId = appInfo.metaData.getString("com.huawei.hms.client.appid").replace("appid=", "");
+        String appId = appInfo.metaData.getString("HUAWEI_PUSH_APP_ID").substring(6);
         return HmsInstanceId.getInstance(context).getToken(appId, "HCM");
     }
 }

@@ -19,8 +19,8 @@
         </activity>
 
         <meta-data
-            android:name="com.huawei.hms.client.appid"
-            android:value="appid=102071911"/>
+            android:name="HUAWEI_PUSH_APP_ID"
+            android:value="value=102071911"/>
 
         <receiver android:name="com.shouzhong.push.demo.PushReceiver"
             android:permission="${applicationId}.permission.PUSH_RECEIVE">

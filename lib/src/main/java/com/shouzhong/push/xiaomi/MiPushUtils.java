@@ -13,16 +13,62 @@ import static com.shouzhong.push.PushUtils.*;
 
 public class MiPushUtils {
 
+    /**
+     * <meta-data
+     *  android:name="XIAOMI_PUSH_APP_ID"
+     *  android:value="value=xxxxxxx"/>
+     *  <meta-data
+     *  android:name="XIAOMI_PUSH_APP_KEY"
+     *  android:value="value=xxxxxxx"/>
+     *
+     * @param context
+     */
     public static void init(Context context) {
         try {
             if (isMainProcess()) {
                 Context cxt = context.getApplicationContext();
                 ApplicationInfo appInfo = cxt.getPackageManager().getApplicationInfo(cxt.getPackageName(), PackageManager.GET_META_DATA);
-                String appId = appInfo.metaData.getString("MIPUSH_APP_ID");
-                String appKey = appInfo.metaData.getString("MIPUSH_APP_KEY");
+                String appId = appInfo.metaData.getString("XIAOMI_PUSH_APP_ID").substring(6);
+                String appKey = appInfo.metaData.getString("XIAOMI_PUSH_APP_KEY").substring(6);
                 MiPushClient.registerPush(cxt, appId, appKey);
             }
         } catch (Exception e) {}
+    }
+
+    /**
+     * 开启推送
+     *
+     * @param context
+     */
+    public static void turnOnPush(Context context) {
+        MiPushClient.turnOnPush(context.getApplicationContext(), new MiPushClient.UPSTurnCallBack() {
+            @Override
+            public void onResult(MiPushClient.CodeResult codeResult) {
+            }
+        });
+    }
+
+    /**
+     * 关闭推送
+     *
+     * @param context
+     */
+    public static void turnOffPush(Context context) {
+        MiPushClient.turnOffPush(context.getApplicationContext(), new MiPushClient.UPSTurnCallBack() {
+            @Override
+            public void onResult(MiPushClient.CodeResult codeResult) {
+            }
+        });
+    }
+
+    /**
+     * 获取推送唯一标识
+     *
+     * @param context
+     * @return
+     */
+    public static String getRegId(Context context) {
+        return MiPushClient.getRegId(context.getApplicationContext());
     }
 
     /**
@@ -54,7 +100,7 @@ public class MiPushUtils {
      */
     public static void setAlias(Context context, String s) {
         if (TextUtils.isEmpty(s)) return;
-        if (TextUtils.isEmpty(MiPushClient.getRegId(context.getApplicationContext()))) return;
+        if (TextUtils.isEmpty(getRegId(context))) return;
         MiPushClient.setAlias(context.getApplicationContext(), s, null);
     }
 
@@ -65,7 +111,7 @@ public class MiPushUtils {
      */
     public static void unsetAlias(Context context, String s) {
         if (TextUtils.isEmpty(s)) return;
-        if (TextUtils.isEmpty(MiPushClient.getRegId(context.getApplicationContext()))) return;
+        if (TextUtils.isEmpty(getRegId(context))) return;
         MiPushClient.unsetAlias(context.getApplicationContext(), s, null);
     }
 
@@ -74,7 +120,7 @@ public class MiPushUtils {
      *
      */
     public static void clearAlias(Context context) {
-        if (TextUtils.isEmpty(MiPushClient.getRegId(context.getApplicationContext()))) return;
+        if (TextUtils.isEmpty(getRegId(context))) return;
         List<String> list = MiPushClient.getAllAlias(context.getApplicationContext());
         if (list == null || list.size() == 0) return;
         for (String s : list) {
@@ -111,7 +157,7 @@ public class MiPushUtils {
      */
     public static void setUserAccount(Context context, String s) {
         if (TextUtils.isEmpty(s)) return;
-        if (TextUtils.isEmpty(MiPushClient.getRegId(context.getApplicationContext()))) return;
+        if (TextUtils.isEmpty(getRegId(context))) return;
         MiPushClient.setUserAccount(context.getApplicationContext(), s, null);
     }
 
@@ -122,7 +168,7 @@ public class MiPushUtils {
      */
     public static void unsetUserAccount(Context context, String s) {
         if (TextUtils.isEmpty(s)) return;
-        if (TextUtils.isEmpty(MiPushClient.getRegId(context.getApplicationContext()))) return;
+        if (TextUtils.isEmpty(getRegId(context))) return;
         MiPushClient.unsetUserAccount(context.getApplicationContext(), s, null);
     }
 
@@ -131,7 +177,7 @@ public class MiPushUtils {
      *
      */
     public static void clearUserAccount(Context context) {
-        if (TextUtils.isEmpty(MiPushClient.getRegId(context.getApplicationContext()))) return;
+        if (TextUtils.isEmpty(getRegId(context))) return;
         List<String> list = MiPushClient.getAllUserAccount(context.getApplicationContext());
         for (String s : list) {
             MiPushClient.unsetUserAccount(context.getApplicationContext(), s, null);

@@ -38,16 +38,16 @@ public class MiPushReceiver extends PushMessageReceiver {
     }
 
     private String toJson(MiPushMessage msg) {
-        if (msg == null || msg.getExtra() == null || msg.getExtra().size() == 0) return null;
+        if (msg == null) return null;
         try {
-            Map<String, String> map = msg.getExtra();
             StringBuffer sb = new StringBuffer("{");
             sb.append("\"title\":\"").append(msg.getTitle()).append("\",");
             sb.append("\"content\":\"").append(msg.getContent()).append("\",");
             sb.append("\"description\":\"").append(msg.getDescription()).append("\",");
             sb.append("\"message_id\":\"").append(msg.getMessageId()).append("\",");
             sb.append("\"notify_id\":").append(msg.getNotifyId());
-            if (msg.getExtra() != null && msg.getExtra().size() > 0) {
+            Map<String, String> map = msg.getExtra();
+            if (map != null && map.size() > 0) {
                 sb.append(",\"extra\":{");
                 for (String s : map.keySet()) {
                     sb.append("\"").append(s).append("\":\"").append(map.get(s)).append("\",");

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -16,6 +16,7 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     compileOnly 'com.blankj:utilcodex:1.28.0'
     compileOnly "com.huawei.hms:push:4.0.2.300"
+    compileOnly "com.meizu.flyme.internet:push-internal:3.9.0"
 }
 
 //发布 Jcenter

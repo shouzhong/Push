@@ -18,7 +18,7 @@ public class OppoPushUtils {
      *  android:name="OPPO_PUSH_APP_KEY"
      *  android:value="value=xxxxxxxx"/>
      *  <meta-data
-     *  android:name="OPPOPUSH_APP_SECRET"
+     *  android:name="OPPO_PUSH_APP_SECRET"
      *  android:value="value=xxxxxxxx"/>
      *
      * @param context

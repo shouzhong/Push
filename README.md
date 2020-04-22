@@ -9,7 +9,7 @@ maven {url 'http://developer.huawei.com/repo/'}
 ```
 ```
 // 基础包
-implementation 'com.shouzhong:Push:1.1.0'
+implementation 'com.shouzhong:Push:1.1.1'
 ```
 以下选择自己需要的
 ```
@@ -134,34 +134,7 @@ unsetTag | 删除标签
 clearTag | 清空标签
 
 ## 混淆
-### 代码混淆
-```
--keep class com.shouzhong.** {*;}
--dontwarn com.shouzhong.**
-// 华为
--keepattributes *Annotation*
--keepattributes Exceptions
--keepattributes InnerClasses
--keepattributes Signature
--keepattributes SourceFile,LineNumberTable
--keep class com.hianalytics.android.**{*;}
--keep class com.huawei.updatesdk.**{*;}
--keep class com.huawei.hms.**{*;}
-// 小米
--keep class com.xiaomi.** {*;}
--dontwarn com.xiaomi.push.**
--keep class com.google.protobuf.micro.**{*;}
--dontwarn com.google.protobuf.micro.**
--keep class org.apache.thrift.**{*;}
--dontwarn org.apache.thrift.**
-// oppo
--keep class com.heytap.msp.** { *;}
-// vivo
--dontwarn com.vivo.push.**
--keep class com.vivo.push.**{*; }
--keep class com.vivo.vms.**{*; }
-```
-### 如果使用AndResGuard，请把以下加入白名单
+代码已为您混淆，如果使用AndResGuard，请把以下加入白名单
 ```
 "R.string.agc*",
 "R.string.hms*",

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.shouzhong.push.demo"
         minSdkVersion 19
@@ -37,7 +37,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation project(":lib")
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.blankj:utilcodex:1.28.0'
+    implementation 'com.blankj:utilcodex:1.29.0'
     implementation "com.huawei.hms:push:4.0.2.300"
     implementation "com.meizu.flyme.internet:push-internal:3.9.0"
 }

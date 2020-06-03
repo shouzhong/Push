@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         minSdkVersion 19
@@ -22,7 +22,7 @@ android {
 
 dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    compileOnly 'com.blankj:utilcodex:1.28.0'
+    compileOnly 'com.blankj:utilcodex:1.29.0'
     compileOnly "com.huawei.hms:push:4.0.2.300"
     compileOnly "com.meizu.flyme.internet:push-internal:3.9.0"
 }
